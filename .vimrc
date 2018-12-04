@@ -30,7 +30,6 @@ let g:deoplete#enable_at_startup = 1
 Plug 'vim-airline/vim-airline'
 Plug 'Yggdroot/indentLine'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'scrooloose/syntastic'
 Plug 'morhetz/gruvbox'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'jiangmiao/auto-pairs'
@@ -98,13 +97,13 @@ nmap ga <Plug>(EasyAlign)
 " IndentLine
 "
 let g:indentLine_char = '¦'
+
 "
 " vim-go
 "
 let g:go_fmt_command = 'goimports'
 let g:go_test_timeout = '15s'
-let g:go_metalinter_enabled = ["goimports","vet", "golint", "errcheck"]
-let g:go_list_type = "quickfix"
+let g:go_fmt_fail_silently = 1
 
 
 autocmd FileType go nmap <Leader>i  <Plug>(go-info)
@@ -121,6 +120,13 @@ set completeopt-=preview
 "
 " lint
 "
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+"打开文件时不进行检查
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_text_changed = 'never'
+
 call ale#linter#Define('go', {
 \   'name': 'revive',
 \   'output_stream': 'both',
@@ -130,6 +136,10 @@ call ale#linter#Define('go', {
 \   'callback': 'ale#handlers#unix#HandleAsWarning',
 \})
 
+
+let g:ale_linters = {
+\    'go':['revive']
+\}
 
 "
 " keymap
