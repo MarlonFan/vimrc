@@ -11,6 +11,7 @@ set foldenable
 set encoding=utf-8
 set list listchars=extends:❯,precedes:❮,tab:▸\ ,trail:˽
 set cursorline
+set clipboard=unnamed
 
 filetype plugin on
 let mapleader = "["
