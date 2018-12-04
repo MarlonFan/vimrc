@@ -44,6 +44,7 @@ Plug 'honza/vim-snippets'
 Plug 'joshdick/onedark.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'w0rp/ale'
 
 call plug#end()
 
@@ -71,6 +72,7 @@ let g:airline#extensions#tabline#formatter = 'default'
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
+let g:airline#extensions#tabline#buffer_nr_show=1
 let g:airline#extensions#c_like_langs = ['arduino', 'c', 'cpp', 'cuda', 'go', 'javascript', 'ld', 'php']
 
 
@@ -115,6 +117,19 @@ autocmd FileType go nmap <leader>ft <Plug>(go-test-func)
 " deoplete
 "
 set completeopt-=preview
+
+"
+" lint
+"
+call ale#linter#Define('go', {
+\   'name': 'revive',
+\   'output_stream': 'both',
+\   'executable': 'revive',
+\   'read_buffer': 0,
+\   'command': 'revive %t',
+\   'callback': 'ale#handlers#unix#HandleAsWarning',
+\})
+
 
 "
 " keymap
