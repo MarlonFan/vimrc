@@ -146,6 +146,7 @@ let g:ale_linters = {
 "
 nnoremap <Leader>p :CtrlP<CR>
 nnoremap <Leader>w :w<CR>
+nnoremap <Leader>q :q<CR>
 nnoremap <Leader>n :bn<CR>
 nnoremap <Leader>m :bp<CR>
 nnoremap <Leader>e :CtrlPMRUFiles<CR>
