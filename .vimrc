@@ -12,6 +12,7 @@ set encoding=utf-8
 set list listchars=extends:❯,precedes:❮,tab:▸\ ,trail:˽
 set cursorline
 set clipboard=unnamed
+set nohls
 
 filetype plugin on
 let mapleader = "["
@@ -86,7 +87,7 @@ colorscheme gruvbox
 "colorscheme onedark
 "let g:onedark_termcolors = 256
 "let g:onedark_terminal_italics = 1
-
+"
 "
 " Easy Align
 "
@@ -150,3 +151,4 @@ nnoremap <Leader>q :q<CR>
 nnoremap <Leader>n :bn<CR>
 nnoremap <Leader>m :bp<CR>
 nnoremap <Leader>e :CtrlPMRUFiles<CR>
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
