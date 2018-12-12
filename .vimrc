@@ -13,9 +13,10 @@ set list listchars=extends:❯,precedes:❮,tab:▸\ ,trail:˽
 set cursorline
 set clipboard=unnamed
 set nohls
+set signcolumn=yes
 
 filetype plugin on
-let mapleader = "["
+let mapleader = ","
 
 call plug#begin('~/.vim/plugged')
 
@@ -45,6 +46,10 @@ Plug 'joshdick/onedark.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'w0rp/ale'
+Plug 'schickling/vim-bufonly'
+Plug 'zchee/deoplete-jedi'
+
+"Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 
 call plug#end()
 
@@ -74,7 +79,6 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
 let g:airline#extensions#tabline#buffer_nr_show=1
 let g:airline#extensions#c_like_langs = ['arduino', 'c', 'cpp', 'cuda', 'go', 'javascript', 'ld', 'php']
-
 
 "
 " Theme
@@ -117,10 +121,13 @@ autocmd FileType go nmap <leader>ft <Plug>(go-test-func)
 " deoplete
 "
 set completeopt-=preview
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 
 "
 " lint
 "
+let g:ale_completion_enabled = 1
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
@@ -151,4 +158,5 @@ nnoremap <Leader>q :q<CR>
 nnoremap <Leader>n :bn<CR>
 nnoremap <Leader>m :bp<CR>
 nnoremap <Leader>e :CtrlPMRUFiles<CR>
+nnoremap <Leader>l :BufOnly<CR>
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
