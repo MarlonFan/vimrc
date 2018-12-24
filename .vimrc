@@ -1,7 +1,9 @@
 set et
 set ci
-set sw=4
+
 set ts=4
+set shiftwidth=4
+set softtabstop=4
 set et
 set expandtab
 set number
@@ -20,15 +22,6 @@ let mapleader = ","
 
 call plug#begin('~/.vim/plugged')
 
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-let g:deoplete#enable_at_startup = 1
-
 Plug 'vim-airline/vim-airline'
 Plug 'Yggdroot/indentLine'
 Plug 'vim-airline/vim-airline-themes'
@@ -40,17 +33,12 @@ Plug 'kien/ctrlp.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 Plug 'joshdick/onedark.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'w0rp/ale'
 Plug 'schickling/vim-bufonly'
-Plug 'zchee/deoplete-jedi'
 
-"Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-
+Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
 call plug#end()
 
 "
@@ -73,7 +61,6 @@ map <C-e> :NERDTreeToggle<CR>
 "
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'default'
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
@@ -111,7 +98,6 @@ let g:go_test_timeout = '15s'
 let g:go_fmt_fail_silently = 1
 
 
-autocmd FileType go nmap <Leader>i  <Plug>(go-info)
 autocmd FileType go nmap <leader>t  <Plug>(go-test)
 autocmd FileType go nmap <leader>b  <Plug>(go-build)
 autocmd FileType go nmap <leader>v  <Plug>(go-vet)
@@ -121,8 +107,12 @@ autocmd FileType go nmap <leader>ft <Plug>(go-test-func)
 " deoplete
 "
 set completeopt-=preview
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
+
+"
+" deoplete-go
+"
+"let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+"let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 
 "
 " lint
