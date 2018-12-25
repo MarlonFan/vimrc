@@ -37,6 +37,8 @@ Plug 'joshdick/onedark.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'w0rp/ale'
 Plug 'schickling/vim-bufonly'
+Plug 'SirVer/ultisnips'
+Plug 'wakatime/vim-wakatime'
 
 Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
 call plug#end()
@@ -96,7 +98,12 @@ let g:indentLine_char = '¦'
 let g:go_fmt_command = 'goimports'
 let g:go_test_timeout = '15s'
 let g:go_fmt_fail_silently = 1
-
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_generate_tags = 1
 
 autocmd FileType go nmap <leader>t  <Plug>(go-test)
 autocmd FileType go nmap <leader>b  <Plug>(go-build)
