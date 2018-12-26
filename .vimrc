@@ -1,6 +1,5 @@
 set et
 set ci
-
 set ts=4
 set shiftwidth=4
 set softtabstop=4
@@ -39,9 +38,16 @@ Plug 'w0rp/ale'
 Plug 'schickling/vim-bufonly'
 Plug 'SirVer/ultisnips'
 Plug 'wakatime/vim-wakatime'
+Plug 'leafgarland/typescript-vim'
 
 Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
+
 call plug#end()
+
+"
+" supertab
+"
+let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
 
 "
 " CtrlP
@@ -88,11 +94,11 @@ nmap <leader>+ <Plug>AirlineSelectNextTab
 set termguicolors
 set guifont=Consolas:h12
 set background=dark
-colorscheme gruvbox
+"colorscheme gruvbox
 "highlight Normal guibg=NONE ctermbg=None
-"colorscheme onedark
-"let g:onedark_termcolors = 256
-"let g:onedark_terminal_italics = 1
+colorscheme onedark
+let g:onedark_termcolors = 256
+let g:onedark_terminal_italics = 1
 "
 "
 " Easy Align
@@ -129,15 +135,9 @@ autocmd FileType go nmap <leader>ft <Plug>(go-test-func)
 set completeopt-=preview
 
 "
-" deoplete-go
-"
-"let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-"let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-
-"
 " lint
 "
-let g:ale_completion_enabled = 1
+"let g:ale_completion_enabled = 1
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
@@ -156,17 +156,18 @@ call ale#linter#Define('go', {
 
 
 let g:ale_linters = {
-\    'go':['revive']
+\   'go':['revive'],
+\   'php':['php'],
 \}
 
 "
 " keymap
 "
 nnoremap <Leader>p :CtrlP<CR>
+nnoremap <leader>e :CtrlPMRUFiles<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>n :bn<CR>
 nnoremap <Leader>m :bp<CR>
-nnoremap <Leader>e :CtrlPMRUFiles<CR>
 nnoremap <Leader>l :BufOnly<CR>
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
