@@ -5,6 +5,5 @@
             "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
             "filetypes": ["go"]
         }
-    },
-    "coc.source.omni.filetypes": ["php", "js", "go", "py"]
+    }
 }
