@@ -1,23 +1,25 @@
-set et
-set ci
-set ts=4
-set shiftwidth=4
-set softtabstop=4
-set et
-set expandtab
 set hidden
 set number
-syntax on
+set updatetime=300
+set noshowmode
+set noswapfile
 set incsearch
-set foldenable
+set autoread
+set vb t_vb=
 set encoding=utf-8
-set list listchars=extends:❯,precedes:❮,tab:▸\ ,trail:˽
 set cursorline
-set clipboard=unnamed
+set clipboard=unnamedplus
 set nohls
 set signcolumn=yes
+set expandtab shiftwidth=4
+set tabstop=4 softtabstop=4
+set list listchars=extends:❯,precedes:❮,tab:▸\ ,trail:˽
+set autoindent
+set copyindent
 
+syntax on
 filetype plugin on
+
 let mapleader = ","
 
 call plug#begin('~/.vim/plugged')
@@ -28,11 +30,10 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'morhetz/gruvbox'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'jiangmiao/auto-pairs'
-"Plug 'ervandew/supertab'
 Plug 'scrooloose/nerdtree'
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'w0rp/ale'
 Plug 'schickling/vim-bufonly'
 Plug 'SirVer/ultisnips'
@@ -44,20 +45,16 @@ Plug 'tpope/vim-surround'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'pbogut/fzf-mru.vim'
-Plug 'StanAngeloff/php.vim'
-Plug 'sgur/vim-editorconfig'
+Plug 'StanAngeloff/php.vim', { 'for': 'php' }
+Plug 'ervandew/supertab'
 Plug 'Shougo/denite.nvim'
 Plug 'joshdick/onedark.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'sgur/vim-editorconfig'
 
 Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
 
 call plug#end()
-
-"
-" supertab
-"
-let g:SuperTabDefaultCompletionType = '<C-X><C-O>'
-
 "
 " NerdTree
 "
@@ -115,11 +112,7 @@ nnoremap <silent> <leader>gb :Gblame<CR>
 "
 set termguicolors
 set background=dark
-"colorscheme gruvbox
-colorscheme onedark
-let g:airline_theme='onedark'
-let g:onedark_termcolors=256
-
+colorscheme gruvbox
 
 "
 "
@@ -132,6 +125,12 @@ nmap ga <Plug>(EasyAlign)
 " IndentLine
 "
 let g:indentLine_char = '¦'
+let g:indentLine_setConceal = 0
+
+"
+" SuperTab
+"
+let g:SuperTabDefaultCompletionType = '<C-X><C-O>'
 
 "
 " vim-go
@@ -158,8 +157,7 @@ set completeopt-=preview
 
 "
 " lint
-"
-"let g:ale_completion_enabled = 1
+
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
@@ -184,24 +182,8 @@ let g:ale_linters = {
 \}
 
 "
-" editorconfig
-"
-let g:editorconfig_blacklist = {
-    \ 'filetype': ['git.*', 'fugitive'],
-    \ 'pattern': ['\.un~$']}
-let g:editorconfig_verbose = 1
-
-"
 " coc
 "
-set updatetime=300
-
-
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " Use `[c` and `]c` for navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
@@ -236,6 +218,8 @@ nnoremap <silent> <leader>ds  :<C-u>Denite coc-service<cr>
 " Show links of current buffer
 nnoremap <silent> <leader>dl  :<C-u>Denite coc-link<cr>
 
+"autocmd BufEnter *.php :syntax sync fromstart
+
 "
 " denite
 "
@@ -252,16 +236,58 @@ call denite#custom#map(
   \ 'noremap'
   \)
 
+"
+" fzf
+"
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+function! s:fzf_statusline()
+  " Override statusline as you like
+  highlight fzf1 ctermfg=161 ctermbg=251
+  highlight fzf2 ctermfg=23 ctermbg=251
+  highlight fzf3 ctermfg=237 ctermbg=251
+  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
+endfunction
+
+autocmd! User FzfStatusLine call <SID>fzf_statusline()
+
+"
+" nerdcommenter
+"
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+"
+" editorconfig
+"
+let g:editorconfig_blacklist = {
+    \ 'filetype': ['git.*', 'fugitive'],
+    \ 'pattern': ['\.un~$']}
 
 "
 " keymap
 "
-"nnoremap <Leader>p :CtrlP<CR>
-"nnoremap <leader>e :CtrlPMRUFiles<CR>
+imap jj <Esc>
 nmap <Leader>fe  :FZFMru<CR>
 nmap <Leader>fp  :Files<CR>
-nmap <Leader>fr  :BTags<CR>
 nmap <Leader>fs  :Ag<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>l :BufOnly<CR> " clear other buffer
+
+"
+" php.vim
+"
+let g:php_minlines= 1000
