@@ -1,11 +1,15 @@
 ## marlon's vim config
 
-> requirement
+> Notice: only supported neovim
 
-- vim
+### requirement
+
 - neovim
 - python3
 
 > install
 
-launch vim or neovim run :PlugInstall command
+### How to usage
+
+- launch neovim run :PlugInstall command
+- restart your neovim
