@@ -22,7 +22,7 @@ filetype plugin on
 
 let mapleader = ","
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 
 Plug 'vim-airline/vim-airline'
 Plug 'Yggdroot/indentLine'
@@ -33,7 +33,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/nerdtree'
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
-Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'fatih/vim-go'
 Plug 'w0rp/ale'
 Plug 'schickling/vim-bufonly'
 Plug 'SirVer/ultisnips'
@@ -50,8 +50,8 @@ Plug 'ervandew/supertab'
 Plug 'Shougo/denite.nvim'
 Plug 'joshdick/onedark.vim'
 Plug 'scrooloose/nerdcommenter'
-Plug 'sgur/vim-editorconfig'
-
+Plug 'hail2u/vim-css3-syntax'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
 
 call plug#end()
@@ -59,7 +59,6 @@ call plug#end()
 " NerdTree
 "
 map <C-e> :NERDTreeToggle<CR>
-let g:NERDTreeWinPos = "right"
 let NERDTreeShowHidden=1
 
 "
@@ -113,6 +112,13 @@ nnoremap <silent> <leader>gb :Gblame<CR>
 set termguicolors
 set background=dark
 colorscheme gruvbox
+"colorscheme onedark
+
+if has("gui_macvim")
+    set guifont=Operator\ Mono\ Book:h13
+    set linespace=6
+endif
+
 
 "
 "
@@ -144,6 +150,7 @@ let g:go_highlight_functions = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_generate_tags = 1
+let g:go_def_mapping_enabled = 0
 
 autocmd FileType go nmap <leader>t  <Plug>(go-test)
 autocmd FileType go nmap <leader>b  <Plug>(go-build)
@@ -164,6 +171,7 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 "打开文件时不进行检查
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_text_changed = 'never'
+let g:ale_fix_on_save = 1
 
 call ale#linter#Define('go', {
 \   'name': 'revive',
@@ -181,6 +189,10 @@ let g:ale_linters = {
 \   'typescript': [],
 \}
 
+let g:ale_fixers = {
+\   'php': 'php_cs_fixer',
+\}
+
 "
 " coc
 "
@@ -194,12 +206,18 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nnoremap <silent> gk :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
-
-" Remap for format selected region
-vmap <leader>ff  <Plug>(coc-format-selected)
 
 " Shortcuts for denite interface
 
@@ -207,8 +225,6 @@ vmap <leader>ff  <Plug>(coc-format-selected)
 nnoremap <silent> <leader>de :<C-u>Denite buffer<cr>
 " Show symbols of current buffer
 nnoremap <silent> <leader>do  :<C-u>Denite coc-symbols<cr>
-" Search symbols of current workspace
-nnoremap <silent> <leader>dt  :<C-u>Denite coc-workspace<cr>
 " Show diagnostics of current workspace
 nnoremap <silent> <leader>da  :<C-u>Denite coc-diagnostic<cr>
 " Show available commands
@@ -217,8 +233,8 @@ nnoremap <silent> <leader>dc  :<C-u>Denite coc-command<cr>
 nnoremap <silent> <leader>ds  :<C-u>Denite coc-service<cr>
 " Show links of current buffer
 nnoremap <silent> <leader>dl  :<C-u>Denite coc-link<cr>
-
-"autocmd BufEnter *.php :syntax sync fromstart
+let g:coc_snippet_next = '<TAB>'
+let g:coc_snippet_prev = '<S-TAB>'
 
 "
 " denite
@@ -260,8 +276,9 @@ function! s:fzf_statusline()
   highlight fzf3 ctermfg=237 ctermbg=251
   setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
 endfunction
-
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
+
+let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -l -g ""'
 
 "
 " nerdcommenter
@@ -272,9 +289,8 @@ let g:NERDCompactSexyComs = 1
 "
 " editorconfig
 "
-let g:editorconfig_blacklist = {
-    \ 'filetype': ['git.*', 'fugitive'],
-    \ 'pattern': ['\.un~$']}
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+let g:EditorConfig_core_mode = "external_command"
 
 "
 " keymap
@@ -287,7 +303,19 @@ nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>l :BufOnly<CR> " clear other buffer
 
+" <Leader>c will delete my code in visual mode, why!?
+map <Leader>c <Nop>
+
+
 "
 " php.vim
 "
 let g:php_minlines= 1000
+
+
+
+"
+" autocmd
+"
+autocmd FileType php setl iskeyword+=$
+au BufRead *.html set filetype=htmlm4
