@@ -31,6 +31,7 @@ autocmd FileType go nmap <leader>tf <Plug>(go-test-func)
 "
 " coc
 "
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Use `[c` and `]c` for navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
@@ -57,32 +58,32 @@ nmap <leader>rn <Plug>(coc-rename)
 " Shortcuts for denite interface
 
 " show buffers of current workspace
-nnoremap <silent> <leader>de :<C-u>Denite buffer<cr>
-" Show symbols of current buffer
+nnoremap <silent> <leader>de  :<C-u>Denite buffer<cr>
+nnoremap <silent> <leader>dp  :<C-u>Denite file/rec<cr>
 nnoremap <silent> <leader>do  :<C-u>Denite coc-symbols<cr>
-" Show diagnostics of current workspace
 nnoremap <silent> <leader>da  :<C-u>Denite coc-diagnostic<cr>
-" Show available commands
 nnoremap <silent> <leader>dc  :<C-u>Denite coc-command<cr>
-" Show available services
 nnoremap <silent> <leader>ds  :<C-u>Denite coc-service<cr>
-" Show links of current buffer
 nnoremap <silent> <leader>dl  :<C-u>Denite coc-link<cr>
 
 let g:coc_snippet_next = '<TAB>'
 let g:coc_snippet_prev = '<S-TAB>'
 
-"
-" keymap
-"
 imap jj <Esc>
-nmap <Leader>fe  :FZFMru<CR>
-nmap <Leader>fp  :Files<CR>
-nmap <Leader>fs  :Ag<CR>
-nnoremap <Leader>w :w<CR>
-nnoremap <Leader>q :q<CR>
-nnoremap <Leader>l :BufOnly<CR> " clear other buffer
+noremap  <Leader>w :w<CR>
+noremap  <Leader>q :q<CR>
+nnoremap <Leader>bl :BufOnly<CR> " clear other buffer
+
+nnoremap <leader>fp :<C-u>LeaderfFile<cr>
+nnoremap <leader>fe :<C-u>LeaderfBufferAll<cr>
+nnoremap <leader>fs :<C-u>Leaderf rg<cr>
+nnoremap <leader>ff :ALEFix<cr>
 
 " <Leader>c will delete my code in visual mode, why!?
 map <Leader>c <Nop>
 
+map <C-w>n :bnext<CR>
+map <C-w>p :bprev<CR>
+
+nmap <C-w>[ :vertical resize -6<CR>
+nmap <C-w>] :vertical resize +6<CR>

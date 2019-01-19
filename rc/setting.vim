@@ -35,7 +35,6 @@ let g:airline#extensions#tabline#buffer_idx_format = {
 set termguicolors
 set background=dark
 colorscheme gruvbox
-"colorscheme onedark
 
 "
 "
@@ -48,7 +47,6 @@ nmap ga <Plug>(EasyAlign)
 " IndentLine
 "
 let g:indentLine_char = '¦'
-let g:indentLine_setConceal = 0
 
 "
 " SuperTab
@@ -82,7 +80,7 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 "打开文件时不进行检查
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_text_changed = 'never'
-let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 0
 
 call ale#linter#Define('go', {
 \   'name': 'revive',
@@ -102,6 +100,7 @@ let g:ale_linters = {
 
 let g:ale_fixers = {
 \   'php': 'php_cs_fixer',
+\   'markdown':'prettier'
 \}
 
 "
@@ -121,34 +120,6 @@ call denite#custom#map(
   \)
 
 "
-" fzf
-"
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
-function! s:fzf_statusline()
-  " Override statusline as you like
-  highlight fzf1 ctermfg=161 ctermbg=251
-  highlight fzf2 ctermfg=23 ctermbg=251
-  highlight fzf3 ctermfg=237 ctermbg=251
-  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
-endfunction
-autocmd! User FzfStatusLine call <SID>fzf_statusline()
-
-let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -l -g ""'
-
-"
 " nerdcommenter
 "
 " Use compact syntax for prettified multi-line comments
@@ -157,11 +128,27 @@ let g:NERDCompactSexyComs = 1
 "
 " editorconfig
 "
-let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
-let g:EditorConfig_core_mode = "external_command"
-
+let g:editorconfig_blacklist = {
+    \ 'filetype': ['git.*', 'fugitive'],
+    \ 'pattern': ['\.un~$']}
+let g:editorconfig_verbose = 1
 
 "
 " php.vim
 "
 let g:php_minlines= 1000
+
+"
+" leaderf
+"
+let g:Lf_ShortcutF = "<Nop>"
+let g:Lf_ShortcutB = "<Nop>"
+let g:Lf_StlSeparator = { 'left': '', 'right': '' }
+let g:Lf_WindowHeight = 0.30
+let g:Lf_UseVersionControlTool = 0
+
+"
+" vim-markdown
+"
+let g:vim_markdown_folding_disabled = 1
+
