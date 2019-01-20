@@ -21,12 +21,10 @@ filetype plugin on
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'vim-airline/vim-airline'
-"Plug 'Yggdroot/indentLine'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'morhetz/gruvbox'
 Plug 'joshdick/onedark.vim'
 Plug 'terryma/vim-multiple-cursors'
-"Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/nerdtree'
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
@@ -46,8 +44,8 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'sgur/vim-editorconfig'
 Plug 'Yggdroot/LeaderF', {'do': './install.sh'}
-Plug 'plasticboy/vim-markdown'
-Plug 'mzlogin/vim-markdown-toc'
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown'}
+Plug 'mzlogin/vim-markdown-toc', { 'for': 'markdown'}
 
 Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
 

@@ -94,12 +94,12 @@ call ale#linter#Define('go', {
 
 let g:ale_linters = {
 \   'go':['revive'],
-\   'php':['php'],
+\   'php':['phpstan'],
 \   'typescript': [],
 \}
 
 let g:ale_fixers = {
-\   'php': 'php_cs_fixer',
+\   'php': 'phpcbf',
 \   'markdown':'prettier'
 \}
 
