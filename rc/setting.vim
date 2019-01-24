@@ -82,6 +82,10 @@ let g:ale_lint_on_enter = 0
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_fix_on_save = 0
 
+let g:ale_php_phpstan_level = 1
+let g:ale_php_phpcbf_standard = '/Users/marlonfan/phpcs.xml.dist'
+let g:ale_php_cs_fixer_options = '--config=/Users/marlonfan/.php_cs'
+
 call ale#linter#Define('go', {
 \   'name': 'revive',
 \   'output_stream': 'both',
@@ -99,7 +103,7 @@ let g:ale_linters = {
 \}
 
 let g:ale_fixers = {
-\   'php': 'phpcbf',
+\   'php': 'php_cs_fixer',
 \   'markdown':'prettier'
 \}
 
@@ -152,3 +156,7 @@ let g:Lf_UseVersionControlTool = 0
 "
 let g:vim_markdown_folding_disabled = 1
 
+"
+" php indent
+"
+let g:PHP_noArrowMatching = 1

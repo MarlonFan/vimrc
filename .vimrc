@@ -1,19 +1,26 @@
-set hidden
+set re=1
+set ttyfast
+set lazyredraw
+
+set sw=4
+set ts=4
+set et
 set number
-set updatetime=300
-set noshowmode
-set noswapfile
 set incsearch
-set autoread
-set vb t_vb=
+set foldenable
 set encoding=utf-8
-set clipboard=unnamedplus
-set nohls
-set signcolumn=yes
-set expandtab shiftwidth=4
-set tabstop=4 softtabstop=4
+set clipboard=unnamed
 set list listchars=extends:❯,precedes:❮,tab:▸\ ,trail:˽
+set signcolumn=yes
+set nohls
+set encoding=utf-8
+set noswapfile
+set softtabstop=4
+set shiftwidth=4
 set autoindent
+set smartcase
+set smartindent
+set smarttab
 
 syntax on
 filetype plugin on
@@ -38,6 +45,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-surround'
 Plug 'StanAngeloff/php.vim', { 'for': 'php' }
+Plug '2072/PHP-Indenting-for-VIm', {'for': 'php'}
 Plug 'ervandew/supertab'
 Plug 'Shougo/denite.nvim'
 Plug 'scrooloose/nerdcommenter'
@@ -46,6 +54,7 @@ Plug 'sgur/vim-editorconfig'
 Plug 'Yggdroot/LeaderF', {'do': './install.sh'}
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown'}
 Plug 'mzlogin/vim-markdown-toc', { 'for': 'markdown'}
+"Plug 'jbgutierrez/vim-better-comments'
 
 Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
 
